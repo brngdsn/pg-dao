@@ -1,0 +1,20 @@
+{
+  "name": "pg-dao",
+  "version": "0.2.0",
+  "description": "simple dao for postgres pool, with a generic crud interface",
+  "main": "src/index.js",
+  "repository": "https://github.com/brngdsn/pg-dao.git",
+  "author": "brn <brn.gdsn@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "node __tests__/pg-dao.test.js",
+    "dev": "nodemon --watch 'src/**/*' -e js --exec \"npm start\"",
+    "start": "node ."
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "pg": "^8.8.0"
+  }
+}
