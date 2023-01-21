@@ -1,5 +1,5 @@
 {
-  "name": "pg-dao",
+  "name": "@brngdsn/pg-dao",
   "version": "0.2.0",
   "description": "simple dao for postgres pool, with a generic crud interface",
   "main": "src/index.js",
