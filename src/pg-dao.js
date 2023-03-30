@@ -26,7 +26,7 @@ module.exports = class PostgresDAO {
 
   async create (table, data) {
     const fields = Object.keys(data).join(',');
-    const values = Object.values(data).map(value => `'${value}'`).join(',');
+    const values = Object.values(data).map(value => `${value}`).join(',');
     const sql = `INSERT INTO ${table} (${fields}) VALUES (${values}) RETURNING *`;
     console.log({ sql })
     const { rows } = await this.pool.query(sql);
@@ -35,7 +35,7 @@ module.exports = class PostgresDAO {
 
   async read (table, select = { '*': true }, where = { }, limit = 25) {
     const select_keys = Object.keys(select).join(',');
-    const where_clause = Object.keys(where).map(field => `${field} = '${where[field]}'`).join('');
+    const where_clause = Object.keys(where).map(field => `${field} = ${where[field]}`).join(' and ');
     const sql = `SELECT ${select_keys} FROM ${table} ${where_clause.length ? `WHERE ${where_clause}` : ``} LIMIT ${limit}`;
     console.log({ sql })
     const { rows } = await this.pool.query(sql);
@@ -43,8 +43,8 @@ module.exports = class PostgresDAO {
   }
 
   async update (table, where = { id: null }, data) {
-    const where_clause = Object.keys(where).map(field => `${field} = '${where[field]}'`).join('');
-    const fields = Object.keys(data).map(field => `${field} = '${data[field]}'`).join(',');
+    const where_clause = Object.keys(where).map(field => `${field} = ${where[field]}`).join(' and ');
+    const fields = Object.keys(data).map(field => `${field} = ${data[field]}`).join(',');
     const sql = `UPDATE ${table} SET ${fields} WHERE ${where_clause} RETURNING *`;
     console.log({ sql })
     const { rows } = await this.pool.query(sql);
@@ -52,7 +52,7 @@ module.exports = class PostgresDAO {
   }
 
   async delete (table, where = { id: null }) {
-    const where_clause = Object.keys(where).map(field => `${field} = '${where[field]}'`).join('');
+    const where_clause = Object.keys(where).map(field => `${field} = ${where[field]}`).join(' and ');
     const sql = `DELETE FROM ${table} WHERE ${where_clause} RETURNING *`;
     console.log({ sql })
     const { rows } = await this.pool.query(sql);
